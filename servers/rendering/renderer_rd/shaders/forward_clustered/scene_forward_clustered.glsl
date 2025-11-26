@@ -2848,7 +2848,7 @@ void fragment_shader(in SceneData scene_data) {
 
 #endif //MODE_SEPARATE_SPECULAR
 
-#else //!COMPOSE_CODE_USED
+#else //COMPOSE_CODE_USED
 	{
 		// TODO assign metallic and roughness back to their xxx_highp counterparts for updated access?
 		vec3 diffuse_color = vec3(0.0);
@@ -2869,7 +2869,7 @@ void fragment_shader(in SceneData scene_data) {
 		frag_color = vec4(diffuse_color + specular_color, alpha);
 #endif
 	}
-#endif
+#endif //COMPOSE_CODE_USED
 
 #endif //MODE_RENDER_DEPTH
 #ifdef MOTION_VECTORS

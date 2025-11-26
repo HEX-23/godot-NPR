@@ -2207,7 +2207,7 @@ void main() {
 
 #endif //MODE_MULTIPLE_RENDER_TARGETS
 
-#else //!COMPOSE_CODE_USED
+#else //COMPOSE_CODE_USED
 	{
 		// TODO assign metallic and roughness back to their xxx_highp counterparts for updated access?
 		vec3 diffuse_color = vec3(0.0);
@@ -2217,6 +2217,8 @@ void main() {
 
 #ifdef FOG_DISABLED
 		vec4 fog_highp = vec4(0.0);
+#else
+		fog_highp = fog;
 #endif
 
 #CODE : COMPOSE
@@ -2228,7 +2230,7 @@ void main() {
 		frag_color = vec4(diffuse_color + specular_color, alpha);
 #endif
 	}
-#endif //!COMPOSE_CODE_USED
+#endif //COMPOSE_CODE_USED
 
 #endif //MODE_RENDER_DEPTH
 
