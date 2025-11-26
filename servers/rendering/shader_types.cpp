@@ -225,6 +225,28 @@ ShaderTypes::ShaderTypes() {
 	shader_modes[RS::SHADER_SPATIAL].functions["light"].can_discard = true;
 	shader_modes[RS::SHADER_SPATIAL].functions["light"].main_function = true;
 
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["DIFFUSE_COLOR"] = ShaderLanguage::TYPE_VEC3;
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["SPECULAR_COLOR"] = ShaderLanguage::TYPE_VEC3;
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["AMBIENT_LIGHT"] = constt(ShaderLanguage::TYPE_VEC3);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["DIFFUSE_LIGHT"] = constt(ShaderLanguage::TYPE_VEC3);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["SPECULAR_LIGHT"] = constt(ShaderLanguage::TYPE_VEC3);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["INDIRECT_SPECULAR_LIGHT"] = constt(ShaderLanguage::TYPE_VEC3);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["FOG"] = constt(ShaderLanguage::TYPE_VEC4);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["AO"] = constt(ShaderLanguage::TYPE_FLOAT);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["AO_LIGHT_AFFECT"] = constt(ShaderLanguage::TYPE_FLOAT);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["EMISSION"] = constt(ShaderLanguage::TYPE_VEC3);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["ALBEDO"] = constt(ShaderLanguage::TYPE_VEC3);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["BACKLIGHT"] = constt(ShaderLanguage::TYPE_VEC3);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["METALLIC"] = constt(ShaderLanguage::TYPE_FLOAT);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["ROUGHNESS"] = constt(ShaderLanguage::TYPE_FLOAT);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["SSS_STRENGTH"] = constt(ShaderLanguage::TYPE_FLOAT);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["SSS_TRANSMITTANCE_COLOR"] = constt(ShaderLanguage::TYPE_VEC4);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["SSS_TRANSMITTANCE_DEPTH"] = constt(ShaderLanguage::TYPE_FLOAT);
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].built_ins["SSS_TRANSMITTANCE_BOOST"] = constt(ShaderLanguage::TYPE_FLOAT);
+
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].can_discard = true;
+	shader_modes[RS::SHADER_SPATIAL].functions["compose"].main_function = true;
+
 	// spatial render modes
 	{
 		shader_modes[RS::SHADER_SPATIAL].modes.push_back({ PNAME("blend"), "mix", "add", "sub", "mul", "premul_alpha" });
