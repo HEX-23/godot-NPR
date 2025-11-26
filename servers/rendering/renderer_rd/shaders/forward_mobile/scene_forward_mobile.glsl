@@ -2150,6 +2150,8 @@ void main() {
 
 #else // MODE_RENDER_DEPTH
 
+#ifndef COMPOSE_CODE_USED
+
 	// multiply by albedo
 	diffuse_light *= albedo; // ambient must be multiplied by albedo at the end
 
@@ -2204,6 +2206,29 @@ void main() {
 	frag_color = out_color;
 
 #endif //MODE_MULTIPLE_RENDER_TARGETS
+
+#else //!COMPOSE_CODE_USED
+	{
+		// TODO assign metallic and roughness back to their xxx_highp counterparts for updated access?
+		vec3 diffuse_color = vec3(0.0);
+		vec3 specular_color = vec3(0.0);
+		vec3 diffuse_light_highp = vec3(diffuse_light);
+		vec3 specular_light_highp = vec3(direct_specular_light);
+
+#ifdef FOG_DISABLED
+		vec4 fog_highp = vec4(0.0);
+#endif
+
+#CODE : COMPOSE
+
+#ifdef MODE_SEPARATE_SPECULAR
+		diffuse_buffer = vec4(diffuse_color, sss_strength);
+		specular_buffer = vec4(specular_color, metallic);
+#else
+		frag_color = vec4(diffuse_color + specular_color, alpha);
+#endif
+	}
+#endif //!COMPOSE_CODE_USED
 
 #endif //MODE_RENDER_DEPTH
 
