@@ -2850,11 +2850,20 @@ void fragment_shader(in SceneData scene_data) {
 
 #else //COMPOSE_CODE_USED
 	{
-		// TODO assign metallic and roughness back to their xxx_highp counterparts for updated access?
+		// output variables, init to 0 when using compose()
 		vec3 diffuse_color = vec3(0.0);
 		vec3 specular_color = vec3(0.0);
-		vec3 diffuse_light_highp = vec3(diffuse_light);
-		vec3 specular_light_highp = vec3(direct_specular_light);
+		// fix the names for compose() code
+		vec3 diffuse_light_highp = diffuse_light;
+		vec3 specular_light_highp = direct_specular_light;
+		// reassign surface properties so that effects of decals, etc. are accessible in compose()
+		vec3 albedo_highp = albedo;
+		float metallic_highp = metallic;
+		float roughness_highp = roughness;
+		float alpha_highp = alpha;
+#ifdef NORMAL_USED
+		vec3 normal_highp = normal;
+#endif
 
 #ifdef FOG_DISABLED
 		vec4 fog = vec4(0.0);
@@ -2866,7 +2875,7 @@ void fragment_shader(in SceneData scene_data) {
 		diffuse_buffer = vec4(diffuse_color, sss_strength);
 		specular_buffer = vec4(specular_color, metallic);
 #else
-		frag_color = vec4(diffuse_color + specular_color, alpha);
+		frag_color = vec4(diffuse_color + specular_color, alpha_highp);
 #endif
 	}
 #endif //COMPOSE_CODE_USED
