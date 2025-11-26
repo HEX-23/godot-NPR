@@ -2346,10 +2346,10 @@ void main() {
 
 #else //COMPOSE_CODE_USED
 	{
-		// TODO assign metallic and roughness back to their xxx_highp counterparts for updated access?
+		// output variables, init to 0 when using compose()
 		vec3 diffuse_color = vec3(0.0);
 		vec3 specular_color = vec3(0.0);
-		vec3 direct_specular_light = specular_light;
+		// fix names for compose()
 		vec3 indirect_specular_light = vec3(0.0);
 
 #ifdef FOG_DISABLED
