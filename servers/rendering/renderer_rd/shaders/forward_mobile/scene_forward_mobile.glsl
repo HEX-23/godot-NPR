@@ -2218,12 +2218,12 @@ void main() {
 #ifdef FOG_DISABLED
 		vec4 fog_highp = vec4(0.0);
 #else
-		fog_highp = fog;
+		vec4 fog_highp = fog;
 #endif
 
 #CODE : COMPOSE
 
-#ifdef MODE_SEPARATE_SPECULAR
+#ifdef MODE_MULTIPLE_RENDER_TARGETS
 		diffuse_buffer = vec4(diffuse_color, sss_strength);
 		specular_buffer = vec4(specular_color, metallic);
 #else
