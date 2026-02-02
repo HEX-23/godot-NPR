@@ -1383,6 +1383,28 @@ void vertex() {)";
 	}
 )";
 	}
+	else if (flags[FLAG_FIXED_SCREEN_RATIO]) {
+		code += R"(
+	// Fixed Size: Enabled
+	if (PROJECTION_MATRIX[3][3] != 0.0) {
+		// Orthogonal matrix; try to do about the same with viewport size.
+		float h = abs(1.0 / (2.0 * PROJECTION_MATRIX[1][1]));
+		// Consistent with vertical FOV (Keep Height).
+		float sc = (h * 2.0);
+		MODELVIEW_MATRIX[0] *= sc;
+		MODELVIEW_MATRIX[1] *= sc;
+		MODELVIEW_MATRIX[2] *= sc;
+	} else {
+	 	// Keep ratio on the screen, use 70 deg FOV as reference.
+		float h = abs(1.428148 / PROJECTION_MATRIX[1][1]);
+		// Scale by depth.
+		float sc = -(MODELVIEW_MATRIX)[3].z * h;
+		MODELVIEW_MATRIX[0] *= sc;
+		MODELVIEW_MATRIX[1] *= sc;
+		MODELVIEW_MATRIX[2] *= sc;
+	}
+)";
+	}
 
 	if (flags[FLAG_UV1_USE_TRIPLANAR] || flags[FLAG_UV2_USE_TRIPLANAR]) {
 		// Generate tangent and binormal in world space.
@@ -3752,6 +3774,7 @@ void BaseMaterial3D::_bind_methods() {
 
 	ADD_GROUP("Transform", "");
 	ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "fixed_size"), "set_flag", "get_flag", FLAG_FIXED_SIZE);
+	ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "fixed_screen_ratio"), "set_flag", "get_flag", FLAG_FIXED_SCREEN_RATIO);
 	ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "use_point_size"), "set_flag", "get_flag", FLAG_USE_POINT_SIZE);
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "point_size", PROPERTY_HINT_RANGE, "0.1,128,0.1,suffix:px"), "set_point_size", "get_point_size");
 	ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "use_particle_trails"), "set_flag", "get_flag", FLAG_PARTICLE_TRAILS_MODE);
@@ -3866,6 +3889,7 @@ void BaseMaterial3D::_bind_methods() {
 	BIND_ENUM_CONSTANT(FLAG_SRGB_VERTEX_COLOR);
 	BIND_ENUM_CONSTANT(FLAG_USE_POINT_SIZE);
 	BIND_ENUM_CONSTANT(FLAG_FIXED_SIZE);
+	BIND_ENUM_CONSTANT(FLAG_FIXED_SCREEN_RATIO);
 	BIND_ENUM_CONSTANT(FLAG_BILLBOARD_KEEP_SCALE);
 	BIND_ENUM_CONSTANT(FLAG_UV1_USE_TRIPLANAR);
 	BIND_ENUM_CONSTANT(FLAG_UV2_USE_TRIPLANAR);

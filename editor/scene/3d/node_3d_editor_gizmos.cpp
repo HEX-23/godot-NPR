@@ -974,7 +974,7 @@ void EditorNode3DGizmoPlugin::create_icon_material(const String &p_name, const R
 		icon->set_transparency(StandardMaterial3D::TRANSPARENCY_ALPHA_SCISSOR);
 		icon->set_alpha_scissor_threshold(0.1);
 		icon->set_texture(StandardMaterial3D::TEXTURE_ALBEDO, p_texture);
-		icon->set_flag(StandardMaterial3D::FLAG_FIXED_SIZE, true);
+		icon->set_flag(StandardMaterial3D::FLAG_FIXED_SCREEN_RATIO, true);
 		icon->set_billboard_mode(StandardMaterial3D::BILLBOARD_ENABLED);
 		icon->set_render_priority(StandardMaterial3D::RENDER_PRIORITY_MIN);
 
