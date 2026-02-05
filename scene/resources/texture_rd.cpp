@@ -81,6 +81,7 @@ void Texture2DRD::set_texture_rd_rid(RID p_texture_rd_rid) {
 		RS::get_singleton()->free_rid(texture_rid);
 		texture_rid = RID();
 		size = Size2i();
+		texture_rd_rid = p_texture_rd_rid;
 
 		notify_property_list_changed();
 		emit_changed();
@@ -187,6 +188,7 @@ void TextureLayeredRD::set_texture_rd_rid(RID p_texture_rd_rid) {
 		size = Size2i();
 		layers = 0;
 		mipmaps = 0;
+		texture_rd_rid = p_texture_rd_rid;
 
 		notify_property_list_changed();
 		emit_changed();
@@ -308,6 +310,7 @@ void Texture3DRD::set_texture_rd_rid(RID p_texture_rd_rid) {
 		image_format = Image::FORMAT_MAX;
 		size = Vector3i();
 		mipmaps = 0;
+		texture_rd_rid = p_texture_rd_rid;
 
 		notify_property_list_changed();
 		emit_changed();
