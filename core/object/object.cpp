@@ -40,6 +40,11 @@
 #include "core/string/translation_server.h"
 #include "core/variant/typed_array.h"
 
+#ifdef TOOLS_ENABLED
+// For allowing methods to be called by method call tracks in the editor.
+#include "editor/editor_node.h"
+#endif // TOOLS_ENABLED
+
 #ifdef DEBUG_ENABLED
 
 struct _ObjectDebugLock {
@@ -1092,6 +1097,16 @@ void Object::set_script(const Variant &p_script) {
 			script_instance = s->placeholder_instance_create(this);
 		}
 	}
+
+#ifdef TOOLS_ENABLED
+	if (Engine::get_singleton()->is_editor_hint()) {
+		// method call tracks cache whether each method is allowed to be invoked in the editor
+		EditorNode *editor = EditorNode::get_singleton();
+		if (editor) {
+			editor->force_clear_anim_cache_in_subtree();
+		}
+	}
+#endif // TOOLS_ENABLED
 
 	notify_property_list_changed(); //scripts may add variables, so refresh is desired
 	emit_signal(CoreStringName(script_changed));
